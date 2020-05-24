@@ -1,7 +1,8 @@
 #define CATCH_CONFIG_RUNNER
 #include <catch.hpp>
 #include "vec2.hpp"
-//#include <iostream>
+#include "mat2.hpp"
+#include <iostream>
 
 Vec2 a; //erstellt neues Vec2 mit a.x == 0.0f und b.x == 0.0f    // +
 Vec2 b{ 5.1f , -9.3f }; // -..- mit Approx(b.x) == 5.1f und Approx(b.y) == -9.3f    // + // -
@@ -93,6 +94,41 @@ TEST_CASE("describe_myVec", "[myVec]") {
     REQUIRE((e / 0).y == Approx(4.5f));                  // Fehlermeldung+Ausgabe des Ursprünglichen wertes (e)
     REQUIRE((e / -1.5).x == Approx(-2.0f));     // x = 3.0 / (-1.5) , y = 4.5 / (-1.5)
     REQUIRE((e / -1.5).y == Approx(-3.0f));
+
+
+    Mat2 i;                             //2.5
+    Mat2 j = { 3 , 4 , 2, 3 };
+    Mat2 k = { 1 , 2, 3 , 4 };
+
+    REQUIRE((j * k).e_00 == 15.0f);                          
+    REQUIRE((j * k).e_01 == 22.0f);
+    REQUIRE((j * k).e_10 == 11.0f);
+    REQUIRE((j * k).e_11 == 16.0f);
+
+    j = { -2 , -4 , 0 , 2 };
+    k = { 0.5f , 2 , -9 , 0 };
+
+    REQUIRE((j * k).e_00 == 35.0f);
+    REQUIRE((j * k).e_01 == -4.0f);
+    REQUIRE((j * k).e_10 == -18.0f);
+    REQUIRE((j * k).e_11 == 0.0f);
+
+    REQUIRE((j * i).e_00 == j.e_00);
+    REQUIRE((j * i).e_01 == j.e_01);
+    REQUIRE((j * i).e_10 == j.e_10);
+    REQUIRE((j * i).e_11 == j.e_11);
+
+
+    i *= j;
+    REQUIRE((i.e_00 == -2.0f));
+    REQUIRE((i.e_01 == -4.0f));
+    REQUIRE((i.e_10 == 0.0f));
+    REQUIRE((i.e_11 == 2.0f));
+    j *= k;
+    REQUIRE((j.e_00 == 35.0f));
+    REQUIRE((j.e_01 == -4.0f));
+    REQUIRE((j.e_10 == -18.0f));
+    REQUIRE((j.e_11 == 0.0f));
 }
 
 int main(int argc, char* argv[]) {
