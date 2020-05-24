@@ -10,11 +10,12 @@ Vec2 e = { 5.0f , -4.0f };    // *
 Vec2 d{ 42.0f , -21.0};       // /
 
 TEST_CASE("describe_myVec", "[myVec]") {
+
     REQUIRE(0.0f == a.x);               //2.2
     REQUIRE(0.0f == a.y);
     REQUIRE(5.1f == Approx(b.x));
     REQUIRE(-9.3f == Approx(b.y));
-    //2.3
+                                        //2.3
     a = { -1.1f , 3.3f };
     a += b;                                         // x = -1.1 + 5.1 , y = 2.3 + (-9.3)
     REQUIRE(a.x == Approx(4.0f));
@@ -37,9 +38,9 @@ TEST_CASE("describe_myVec", "[myVec]") {
     REQUIRE(e.x == 0);                              // x = -25 * 0 , y = 20 * 0
     REQUIRE(e.y == 0);
     e = { 5.0f , -4.0f };
-    e *= 20.1f;
-    REQUIRE(e.x == Approx(100.5f));                 // x = 5 * 20.1 , y = -4 * 20.1
-    REQUIRE(e.y == Approx(-80.4f));
+    e *= 2.1f;
+    REQUIRE(e.x == Approx(10.5f));                 // x = 5 * 2.1 , y = -4 * 2.1
+    REQUIRE(e.y == Approx(-8.4f));
 
 
     d /= 4.2f;
@@ -48,6 +49,13 @@ TEST_CASE("describe_myVec", "[myVec]") {
     d /= -10.0f;
     REQUIRE(d.x == Approx(-1.0f));                // x = 10 / (-10) , y = -5 / (-10)
     REQUIRE(d.y == Approx(0.5f));
+
+    REQUIRE((d /= 0).x == Approx(-1.0f));                   // -1/0 bzw. 0.5/0 Fehler!! Undef! -> Fehlermeldung
+    REQUIRE((d /= 0).y == Approx(0.5f));                    // Vec2 d bleibt gleich!
+    d = { 0 , 0 };
+    d /= 5.7f;
+    REQUIRE(d.x == Approx(0.0f));                // x = 0 / 5.7f , y = 0 / 5.7f
+    REQUIRE(d.y == Approx(0.0f));
 
 
     Vec2 e = { -4.2f , 2.4f };        //2.4
@@ -66,33 +74,25 @@ TEST_CASE("describe_myVec", "[myVec]") {
     REQUIRE((e * -1.5f).y == Approx(-3.6f));
     REQUIRE((e * 0.0f).x == Approx(0.0f));
     REQUIRE((e * 0.0f).y == Approx(0.0f));
-    REQUIRE((e * 2.5f).x == Approx(-10.5));     // x = -4.2 * 2.5 , y = 2.4 * 2.5
-    REQUIRE((e * 2.5f).y == Approx(6.0));
+    REQUIRE((e * 2.5f).x == Approx(-10.5f));     // x = -4.2 * 2.5 , y = 2.4 * 2.5
+    REQUIRE((e * 2.5f).y == Approx(6.0f));
 
 
     REQUIRE((-1.5f * e).x == Approx(6.3f));     // x = -1.5 * 4.2 , y = -1.5 * 2.4
     REQUIRE((-1.5f * e).y == Approx(-3.6f));
     REQUIRE((0.0f * e).x == Approx(0.0f));
     REQUIRE((0.0f * e).y == Approx(0.0f));
-    REQUIRE((2.5f * e).x == Approx(-10.5));     // x = 2.5 * (-4.2), y = 2.5 * 2.4
-    REQUIRE((2.5f * e).y == Approx(-21.0));
+    REQUIRE((2.5f * e).x == Approx(-10.5f));     // x = 2.5 * (-4.2), y = 2.5 * 2.4
+    REQUIRE((2.5f * e).y == Approx(-21.0f));
 
 
     e = { 3.0f , 4.5f };
     REQUIRE((e / 0.5).x == Approx(6.0f));       // x = 3.0 / 0.5 , y = 4.5 / 0.5
     REQUIRE((e / 0.5).y == Approx(9.0f));
-    REQUIRE((e / 0).x == e.x);                  // x = 3.0 / 0 , y = 4.5 / 0 -> Fehler!!
-    REQUIRE((e / 0).y == e.y);                  // Fehlermeldung+Ausgabe des Ursprünglichen wertes (e)
+    REQUIRE((e / 0).x == Approx(3.0f));                  // x = 3.0 / 0 , y = 4.5 / 0 -> Fehler!!
+    REQUIRE((e / 0).y == Approx(4.5f));                  // Fehlermeldung+Ausgabe des Ursprünglichen wertes (e)
     REQUIRE((e / -1.5).x == Approx(-2.0f));     // x = 3.0 / (-1.5) , y = 4.5 / (-1.5)
     REQUIRE((e / -1.5).y == Approx(-3.0f));
-
-    REQUIRE((d /= 0).x == d.x);                   // -1/0 bzw. 0.5/0 Fehler!! Undef! -> Fehlermeldung
-    REQUIRE((d /= 0).y == d.y);                   // Vec2 d bleibt gleich!
-
-    d = { 0 , 0 };
-    d /= 5.7f;
-    REQUIRE(d.x == Approx(0.0f));                // x = 0 / 5.7f , y = 0 / 5.7f
-    REQUIRE(d.y == Approx(0.0f));
 }
 
 int main(int argc, char* argv[]) {
