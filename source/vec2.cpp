@@ -1,14 +1,25 @@
 #include "vec2.hpp"
+#include <iostream>
 
 Vec2& Vec2::operator+=(Vec2 const& v) {
-	return Vec2{ x + x,y + y };
+	x += v.x; y += v.y;
+	return *this;
 }
 Vec2& Vec2::operator-=(Vec2 const& v) {
-	return Vec2{ x - x, y - y };
+	x -= v.x; y -= v.y;
+	return *this;
 }
 Vec2& Vec2::operator*=(float s){
-	return Vec2{x * s, y * s};
+	x *= s; y *= s;
+	return *this;
 }
 Vec2& Vec2::operator/=(float s) {
-	return Vec2{x / s, y / s};
+	if (s == 0) {
+		std::cout << "Der Divisor darf nicht Null sein!\n";
+		return *this;
+	}
+	else {
+		x /= s; y /= s;
+		return *this;
+	}
 }
