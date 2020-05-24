@@ -83,7 +83,7 @@ TEST_CASE("describe_myVec", "[myVec]") {
     REQUIRE((0.0f * e).x == Approx(0.0f));
     REQUIRE((0.0f * e).y == Approx(0.0f));
     REQUIRE((2.5f * e).x == Approx(-10.5f));     // x = 2.5 * (-4.2), y = 2.5 * 2.4
-    REQUIRE((2.5f * e).y == Approx(-21.0f));
+    REQUIRE((2.5f * e).y == Approx(6.0f));
 
 
     e = { 3.0f , 4.5f };

@@ -24,10 +24,10 @@ Vec2& Vec2::operator/=(float s) {
 	}
 }
 Vec2 operator+(Vec2 const& u, Vec2 const& v) {
-	return Vec2(u) += v;
+	return Vec2(u) += Vec2(v);
 }
 Vec2 operator-(Vec2 const& u, Vec2 const& v) {
-	return Vec2(u) -= v;
+	return Vec2(u) -= Vec2(v);
 }
 Vec2 operator*(Vec2 const& v, float s) {
 	return Vec2(v) *= s;
@@ -41,6 +41,6 @@ Vec2 operator/(Vec2 const& v, float s) {
 		return Vec2(v) /= s;
 	}
 }
-Vec2 operator*(float s, Vec2 const& v) {
-	return s * v;
+Vec2 operator*(float s, Vec2 const& v) {;
+return Vec2({ s*v.x,s*v.y});
 }
