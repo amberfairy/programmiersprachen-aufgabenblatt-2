@@ -2,6 +2,7 @@
 #include <catch.hpp>
 #include "vec2.hpp"
 #include "mat2.hpp"
+#include "color.hpp"
 #include <iostream>
 
 Vec2 a; //erstellt neues Vec2 mit a.x == 0.0f und b.x == 0.0f    // +
@@ -150,7 +151,15 @@ TEST_CASE("describe_myVec", "[myVec]") {
     REQUIRE(transpose(n).e_10 == Approx(-2.5f));
     REQUIRE(transpose(n).e_11 == Approx(1.5f));
 
+    Color c1;
+    Color c2 = { 2.5f , -3.6f , 0.0f };
+    REQUIRE(c1.r == 0.5f);
+    REQUIRE(c1.g == 0.5f);
+    REQUIRE(c1.b == 0.5f);
 
+    REQUIRE(c2.r == 2.5f);
+    REQUIRE(c2.g == -3.6f);
+    REQUIRE(c2.b == 0.0f);
 
     
 }
