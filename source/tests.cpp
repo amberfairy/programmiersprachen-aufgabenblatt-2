@@ -100,18 +100,18 @@ TEST_CASE("describe_myVec", "[myVec]") {
     Mat2 j = { 3 , 4 , 2, 3 };
     Mat2 k = { 1 , 2, 3 , 4 };
 
-    REQUIRE((j * k).e_00 == 15.0f);                          
-    REQUIRE((j * k).e_01 == 22.0f);
-    REQUIRE((j * k).e_10 == 11.0f);
-    REQUIRE((j * k).e_11 == 16.0f);
+    REQUIRE((j * k).e_00 == Approx(15.0f));                          
+    REQUIRE((j * k).e_01 == Approx(22.0f));
+    REQUIRE((j * k).e_10 == Approx(11.0f));
+    REQUIRE((j * k).e_11 == Approx(16.0f));
 
     j = { -2 , -4 , 0 , 2 };
     k = { 0.5f , 2 , -9 , 0 };
 
-    REQUIRE((j * k).e_00 == 35.0f);
-    REQUIRE((j * k).e_01 == -4.0f);
-    REQUIRE((j * k).e_10 == -18.0f);
-    REQUIRE((j * k).e_11 == 0.0f);
+    REQUIRE((j * k).e_00 == Approx(35.0f));
+    REQUIRE((j * k).e_01 == Approx(-4.0f));
+    REQUIRE((j * k).e_10 == Approx(-18.0f));
+    REQUIRE((j * k).e_11 == Approx(0.0f));
 
     REQUIRE((j * i).e_00 == j.e_00);
     REQUIRE((j * i).e_01 == j.e_01);
@@ -120,15 +120,39 @@ TEST_CASE("describe_myVec", "[myVec]") {
 
 
     i *= j;
-    REQUIRE((i.e_00 == -2.0f));
-    REQUIRE((i.e_01 == -4.0f));
-    REQUIRE((i.e_10 == 0.0f));
-    REQUIRE((i.e_11 == 2.0f));
+    REQUIRE(i.e_00 == Approx(-2.0f));
+    REQUIRE(i.e_01 == Approx(-4.0f));
+    REQUIRE(i.e_10 == Approx(0.0f));
+    REQUIRE(i.e_11 == Approx(2.0f));
     j *= k;
-    REQUIRE((j.e_00 == 35.0f));
-    REQUIRE((j.e_01 == -4.0f));
-    REQUIRE((j.e_10 == -18.0f));
-    REQUIRE((j.e_11 == 0.0f));
+    REQUIRE(j.e_00 == Approx(35.0f));
+    REQUIRE(j.e_01 == Approx(-4.0f));
+    REQUIRE(j.e_10 == Approx(-18.0f));
+    REQUIRE(j.e_11 == Approx(0.0f));
+
+    
+    k = { 0.5f , 2 , -9 , 0 };    // 2.6
+    f = { 6.2f , -8.4f };
+    
+    Vec2 g = { 0 , 4.5f };
+    Vec2 l = k * g;
+    REQUIRE(l.x == 9.0f);                           // l = { g.x*k.e_00 + g.y*k.e_01 , g.x*k.e_10 + g.y*k.e_11}
+    REQUIRE(l.y == 0.0f);                           // l = {     0      +     9      ,     0      +    0      }
+    
+
+    Mat2 m;
+    Mat2 n = { 7.0f , -2.5f , 0.0f , 1.5f };
+    REQUIRE(transpose(m).e_01 == m.e_01);           // m =  1  0 , trans(m) = 1  0  , die 0en werden getauscht und
+    REQUIRE(transpose(m).e_10 == m.e_10);           //      0  1              0  1    die Hauptdiag.(1) bleibt gleich!
+
+    REQUIRE(transpose(n).e_00 == Approx(7.0f));     // m = 7.0   0.0  ,  trans(m) = 7.0  -2.5 
+    REQUIRE(transpose(n).e_01 == Approx(0.0f));     //    -2.5   1.5                0.0   1.5
+    REQUIRE(transpose(n).e_10 == Approx(-2.5f));
+    REQUIRE(transpose(n).e_11 == Approx(1.5f));
+
+
+
+    
 }
 
 int main(int argc, char* argv[]) {
