@@ -27,7 +27,7 @@ float Mat2::det() const{
 	return e_00 * e_11 - e_10 * e_01;
 }
 
-Mat2 invserve(Mat2 const& m){
+Mat2 inverse(Mat2 const& m){
 	if (m.det() == 0) {
 		std::cout << "Die Inverse kann nur bestimmt werde, wenn die Determinante != 0 ist!";
 		return Mat2(m);

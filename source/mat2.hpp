@@ -23,7 +23,7 @@ Mat2 operator*(float s, Mat2 const& m);
 Vec2 operator*(Mat2 const& m, Vec2 const& v);
 
 
-Mat2 invserve(Mat2 const& m);
+Mat2 inverse(Mat2 const& m);
 Mat2 transpose(Mat2 const& m);
 Mat2 make_rotation_mat2(float phi);
 

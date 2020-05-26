@@ -151,6 +151,23 @@ TEST_CASE("describe_myVec", "[myVec]") {
     REQUIRE(transpose(n).e_10 == Approx(-2.5f));
     REQUIRE(transpose(n).e_11 == Approx(1.5f));
 
+    Mat2 o = { -2.0f , 4.0f , 3.5f , 5.5f };
+    REQUIRE(n.det() == Approx(10.5f));              // n = 7*1.5 - (-2.5)*0 = 10.5
+    REQUIRE(m.det() == Approx(1.0f));               // m = {1,0,0,1} -> 1*1 - 0*0 = 1
+    REQUIRE(o.det() == Approx(-25.0));              // o = -2*5.5 - 4*3.5 = -11-14 = -25
+
+    //n = { 7.0f , -2.5f , 0.0f , 1.5f };   -> A(dach)^T = {1.5f , 2.5f , -0.0f , 7.0f}
+    REQUIRE(inverse(n).e_00 == Approx(1.5f/10.5f)); // 1/det(n) = 1/10.5  ,  1/10.5 * A(dach)^T
+    REQUIRE(inverse(n).e_01 == Approx(2.5f/10.5f));
+    REQUIRE(inverse(n).e_10 == Approx(0.0f/10.5f));
+    REQUIRE(inverse(n).e_11 == Approx(7.0f/10.5f));
+
+    // m = { 1.0f , 0.0f , 0.0f , 1.0f }  , m.det = 1.0f, A(dach)^T = {1.0f , -0.0f , -0.0f , 1.0f} = m
+    REQUIRE(inverse(m).e_00 == Approx(1.0f / 1.0f));
+    REQUIRE(inverse(m).e_01 == Approx(0.0f));
+    REQUIRE(inverse(m).e_10 == Approx(0.0f));
+    REQUIRE(inverse(m).e_11 == Approx(1.0f));
+
     Color c1;
     Color c2 = { 2.5f , -3.6f , 0.0f };
     REQUIRE(c1.r == 0.5f);
