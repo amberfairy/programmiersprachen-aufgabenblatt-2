@@ -3,6 +3,8 @@
 #include "vec2.hpp"
 #include "mat2.hpp"
 #include "color.hpp"
+#include "circle.hpp"
+#include "rect.hpp"
 #include <iostream>
 
 Vec2 a; //erstellt neues Vec2 mit a.x == 0.0f und b.x == 0.0f    // +
@@ -17,7 +19,7 @@ TEST_CASE("describe_myVec", "[myVec]") {
     REQUIRE(0.0f == a.y);
     REQUIRE(5.1f == Approx(b.x));
     REQUIRE(-9.3f == Approx(b.y));
-                                        //2.3
+    //2.3
     a = { -1.1f , 3.3f };
     a += b;                                         // x = -1.1 + 5.1 , y = 2.3 + (-9.3)
     REQUIRE(a.x == Approx(4.0f));
@@ -101,7 +103,7 @@ TEST_CASE("describe_myVec", "[myVec]") {
     Mat2 j = { 3 , 4 , 2, 3 };
     Mat2 k = { 1 , 2, 3 , 4 };
 
-    REQUIRE((j * k).e_00 == Approx(15.0f));                          
+    REQUIRE((j * k).e_00 == Approx(15.0f));
     REQUIRE((j * k).e_01 == Approx(22.0f));
     REQUIRE((j * k).e_10 == Approx(11.0f));
     REQUIRE((j * k).e_11 == Approx(16.0f));
@@ -131,15 +133,15 @@ TEST_CASE("describe_myVec", "[myVec]") {
     REQUIRE(j.e_10 == Approx(-18.0f));
     REQUIRE(j.e_11 == Approx(0.0f));
 
-    
+
     k = { 0.5f , 2 , -9 , 0 };    // 2.6
     f = { 6.2f , -8.4f };
-    
+
     Vec2 g = { 0 , 4.5f };
     Vec2 l = k * g;
     REQUIRE(l.x == 9.0f);                           // l = { g.x*k.e_00 + g.y*k.e_01 , g.x*k.e_10 + g.y*k.e_11}
     REQUIRE(l.y == 0.0f);                           // l = {     0      +     9      ,     0      +    0      }
-    
+
 
     Mat2 m;
     Mat2 n = { 7.0f , -2.5f , 0.0f , 1.5f };
@@ -157,10 +159,10 @@ TEST_CASE("describe_myVec", "[myVec]") {
     REQUIRE(o.det() == Approx(-25.0));              // o = -2*5.5 - 4*3.5 = -11-14 = -25
 
     //n = { 7.0f , -2.5f , 0.0f , 1.5f };   -> A(dach)^T = {1.5f , 2.5f , -0.0f , 7.0f}
-    REQUIRE(inverse(n).e_00 == Approx(1.5f/10.5f)); // 1/det(n) = 1/10.5  ,  1/10.5 * A(dach)^T
-    REQUIRE(inverse(n).e_01 == Approx(2.5f/10.5f));
-    REQUIRE(inverse(n).e_10 == Approx(0.0f/10.5f));
-    REQUIRE(inverse(n).e_11 == Approx(7.0f/10.5f));
+    REQUIRE(inverse(n).e_00 == Approx(1.5f / 10.5f)); // 1/det(n) = 1/10.5  ,  1/10.5 * A(dach)^T
+    REQUIRE(inverse(n).e_01 == Approx(2.5f / 10.5f));
+    REQUIRE(inverse(n).e_10 == Approx(0.0f / 10.5f));
+    REQUIRE(inverse(n).e_11 == Approx(7.0f / 10.5f));
 
     // m = { 1.0f , 0.0f , 0.0f , 1.0f }  , m.det = 1.0f, A(dach)^T = {1.0f , -0.0f , -0.0f , 1.0f} = m
     REQUIRE(inverse(m).e_00 == Approx(1.0f / 1.0f));
@@ -178,9 +180,25 @@ TEST_CASE("describe_myVec", "[myVec]") {
     REQUIRE(c2.g == -3.6f);
     REQUIRE(c2.b == 0.0f);
 
-    
-}
+    //2.9
+    Circle ci1 = { 1.0f , {0.0f,0.0f} , {0.0f,1.0f,0.0f} }; //float const& newrad_ , Vec2 const& newcenter_ , Color const& newcolCir_
+    Circle ci2 = { 2.5f, {} , {}  };
+    Circle ci3 = { 0.0f , {} , {} };
+    Circle ci4 = { -10.2 , {} , {} };
 
+    REQUIRE(ci1.circumference() == Approx(6.28319f));
+    REQUIRE(ci2.circumference() == Approx(15.7079f));
+    REQUIRE(ci3.circumference() == Approx(0.0f));
+    REQUIRE(ci4.circumference() == Approx(64.08849f));
+
+    Rect re1 = { {} , {} , {1.0f,0.0f,0.0f} };      //Vec2 const& newmin_ , Vec2 const& newmax_ , Color const& newrgb_ 
+    Rect re2 = { {2.0f , -14.0f} , {7.5f , -4.5f} , {} };
+    Rect re3 = { {5.2f , 0.0f} , {-3.7f , -42.0f} , {} };
+
+    REQUIRE(re1.circumference() == Approx(0.0f));
+    REQUIRE(re2.circumference() == Approx(30.0f));
+    REQUIRE(re3.circumference() == Approx(101.8));
+}
 int main(int argc, char* argv[]) {
     return Catch::Session().run(argc, argv);
 }

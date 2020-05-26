@@ -8,11 +8,13 @@ class Circle {
 private:
 	float rad_ = 1.0f;
 	Vec2 center_ = { 0.0f , 0.0f };
-	Color colCir_ = { 0.0f , 1.0f , 0.0f };
+	Color colCir_ = { 0.0f , 1.0f , 0.0f };;
 
 public:
 	//...so irgendwie?
 	Circle(float const& newrad_, Vec2 const& newcenter_, Color const& newcolCir_);
+
+	float circumference();
 
 
 
