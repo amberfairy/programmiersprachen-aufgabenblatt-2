@@ -1,8 +1,9 @@
 #ifndef CIRCLE_HPP //#TODO irgendwie nicht verzweifeln :) oder so...
 #define CIRCLE_HPP
-#include "vec2.hpp"
 #include "color.hpp"
-#include "mat2.hpp"		
+#include "mat2.hpp"	
+#include "vec2.hpp"
+	
 
 class Circle {
 private:
@@ -14,8 +15,8 @@ public:
 	//...so irgendwie?
 	Circle(float const& newrad_, Vec2 const& newcenter_, Color const& newcolCir_);
 
-	float circumference();
-
+	float const circumference();		//const, da umfang eines dazugehörigen kreises immer abhängig vom kreis selber ist
+									    //außerdem elem. datentyp
 
 
 	/*

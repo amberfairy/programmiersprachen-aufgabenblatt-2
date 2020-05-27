@@ -1,11 +1,17 @@
 #define CATCH_CONFIG_RUNNER
-#include <catch.hpp>
-#include "vec2.hpp"
-#include "mat2.hpp"
+#include "circle.hpp"       // zuerst eigene ".hpp" dateien (im Projekt)
 #include "color.hpp"
-#include "circle.hpp"
+#include "mat2.hpp"
 #include "rect.hpp"
-#include <iostream>
+#include "vec2.hpp"
+                           
+#include <catch.hpp>        // dann andere ".hpp" (Fremd)Bibliotheken
+
+#include <iostream>         // dann die Std biblioth.
+
+
+//nicht vergessen! keine tabs, lieber leerzeichen.
+
 
 Vec2 a; //erstellt neues Vec2 mit a.x == 0.0f und b.x == 0.0f    // +
 Vec2 b{ 5.1f , -9.3f }; // -..- mit Approx(b.x) == 5.1f und Approx(b.y) == -9.3f    // + // -
@@ -19,7 +25,7 @@ TEST_CASE("describe_myVec", "[myVec]") {
     REQUIRE(0.0f == a.y);
     REQUIRE(5.1f == Approx(b.x));
     REQUIRE(-9.3f == Approx(b.y));
-    //2.3
+                                        //2.3
     a = { -1.1f , 3.3f };
     a += b;                                         // x = -1.1 + 5.1 , y = 2.3 + (-9.3)
     REQUIRE(a.x == Approx(4.0f));
@@ -134,14 +140,18 @@ TEST_CASE("describe_myVec", "[myVec]") {
     REQUIRE(j.e_11 == Approx(0.0f));
 
 
-    k = { 0.5f , 2 , -9 , 0 };    // 2.6
-    f = { 6.2f , -8.4f };
 
+    //2.6
+    k = { 0.5f , 2 , -9 , 0 };
+    f = { 6.2f , -8.4f };
     Vec2 g = { 0 , 4.5f };
     Vec2 l = k * g;
-    REQUIRE(l.x == 9.0f);                           // l = { g.x*k.e_00 + g.y*k.e_01 , g.x*k.e_10 + g.y*k.e_11}
-    REQUIRE(l.y == 0.0f);                           // l = {     0      +     9      ,     0      +    0      }
 
+    REQUIRE(l.x == Approx(9.0f));                           // l = { g.x*k.e_00 + g.y*k.e_01 , g.x*k.e_10 + g.y*k.e_11}
+    REQUIRE(l.y == Approx(0.0f));                           // l = {     0      +     9      ,     0      +    0      }
+    l = k * f;
+    REQUIRE(l.x == Approx(-13.7f));
+    REQUIRE(l.y == Approx(-55.8f));
 
     Mat2 m;
     Mat2 n = { 7.0f , -2.5f , 0.0f , 1.5f };
@@ -170,6 +180,10 @@ TEST_CASE("describe_myVec", "[myVec]") {
     REQUIRE(inverse(m).e_10 == Approx(0.0f));
     REQUIRE(inverse(m).e_11 == Approx(1.0f));
 
+
+
+
+    //2.7
     Color c1;
     Color c2 = { 2.5f , -3.6f , 0.0f };
     REQUIRE(c1.r == 0.5f);
@@ -179,6 +193,8 @@ TEST_CASE("describe_myVec", "[myVec]") {
     REQUIRE(c2.r == 2.5f);
     REQUIRE(c2.g == -3.6f);
     REQUIRE(c2.b == 0.0f);
+
+
 
     //2.9
     Circle ci1 = { 1.0f , {0.0f,0.0f} , {0.0f,1.0f,0.0f} }; //float const& newrad_ , Vec2 const& newcenter_ , Color const& newcolCir_
@@ -199,6 +215,9 @@ TEST_CASE("describe_myVec", "[myVec]") {
     REQUIRE(re2.circumference() == Approx(30.0f));
     REQUIRE(re3.circumference() == Approx(101.8));
 }
+
+
+
 int main(int argc, char* argv[]) {
     return Catch::Session().run(argc, argv);
 }

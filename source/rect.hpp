@@ -1,8 +1,9 @@
 #ifndef RECT_HPP
 #define RECT_HPP
+#include "color.hpp"
 #include "mat2.hpp"
 #include "vec2.hpp"
-#include "color.hpp"
+
 
 class Rect {
 private:
@@ -16,14 +17,9 @@ public:
 		rgb_ = newrgb_;
 		min_ = newmin_;
 		max_ = newmax_;
-		//was weiß ich... das haben wir noch nie gemacht. ich kann das alles eh nicht..
 	}
 
-
-
-
-	float const circumference();
-
-	//get/set nicht machen! unnötig? was für konstruktoren sollte man denn machen? bereits kreis/rect erstellen? ich will nicht mehr...
-};
+	float const circumference();         //const, da umfang eines dazugehörigen vierecks immer abhängig vom viereck selber ist
+	                                     //außerdem elem. datentyp
+	};
 #endif
